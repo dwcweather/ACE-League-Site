@@ -10,7 +10,7 @@
         :root { --bg-main: #000000; --bg-card: #1c1c1c; --text-primary: #ffffff; --text-secondary: #a0a0a0; --accent-red: #e50914; --team-red: #ff4d4d; --team-blue: #4d88ff; --border-color: #333; }
         body { background-color: var(--bg-main); color: var(--text-primary); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; overflow-x: hidden; }
         
-        /* SIDEBAR (Locked & Top) */
+        /* SIDEBAR */
         .sidebar { width: 70px; height: 100vh; position: fixed; top: 0; left: 0; border-right: 1px solid var(--border-color); display: flex; flex-direction: column; align-items: center; padding-top: 20px; z-index: 1000; background: var(--bg-main); }
         .sidebar-icon { font-size: 1.5rem; color: var(--text-secondary); margin-bottom: 35px; cursor: pointer; }
         .sidebar-icon.active, .sidebar-icon:hover { color: var(--text-primary); }
@@ -38,25 +38,25 @@
         .status-column { position: absolute; top: 20px; right: 20px; text-align: right; }
         .status-live { color: var(--accent-red); font-weight: bold; }
 
-        /* --- STATS STYLING --- */
+        /* TABS */
         .game-tabs { display: flex; justify-content: space-around; border-bottom: 1px solid var(--border-color); margin-bottom: 20px; }
         .g-tab { padding: 10px 20px; color: var(--text-secondary); cursor: pointer; font-weight: 600; text-transform: uppercase; }
         .g-tab.active { color: var(--text-primary); border-bottom: 3px solid var(--accent-red); }
 
-        /* HEADER ALIGNMENT */
+        /* DETAIL HEADER */
         .detail-header { position: relative; display: flex; justify-content: center; align-items: center; margin-bottom: 30px; }
         .back-btn-wrapper { position: absolute; left: 0; }
         
-        /* TEAM HEADER */
+        /* TEAM HEADER (UPDATED) */
         .team-stats-header { display: flex; align-items: center; padding: 20px 0; margin-bottom: 10px; }
-        /* FIX: Set header logo to 60px */
         .header-logo { width: 60px; height: 60px; font-size: 1.5rem; }
         .header-info { flex: 1; margin-left: 20px;}
         .team-name-header { font-size: 1.2rem; font-weight: 800; margin-bottom: 10px; }
-        .team-stats-row { display: flex; gap: 20px; }
+        
+        .team-stats-row { display: flex; gap: 30px; } /* Increased gap for cleaner look */
         .stat-group { display: flex; flex-direction: column; }
-        .stat-val-big { font-size: 1.4rem; font-weight: 800; line-height: 1; }
-        .stat-label-small { font-size: 0.7rem; color: var(--text-secondary); font-weight: 700; text-transform: uppercase; }
+        .stat-val-big { font-size: 1.6rem; font-weight: 800; line-height: 1; }
+        .stat-label-small { font-size: 0.75rem; color: var(--text-secondary); font-weight: 700; text-transform: uppercase; margin-top: 4px;}
 
         /* PLAYER ROWS */
         .player-row { display: flex; align-items: center; padding: 15px 0; }
@@ -67,7 +67,7 @@
         .p-val { font-size: 1.1rem; font-weight: 700; color: white; }
         .p-lbl { font-size: 0.65rem; color: var(--text-secondary); font-weight: 600; text-transform: uppercase; }
 
-        /* COMMENT BADGES & AVATAR SIZING */
+        /* COMMENT BADGES & AVATARS */
         .avatar-wrapper { position: relative; display: inline-block; margin-right: 15px; }
         .comment-badge {
             position: absolute; bottom: -5px; right: -8px;
@@ -76,7 +76,6 @@
             border-radius: 8px; border: 2px solid var(--bg-main);
             display: flex; align-items: center; gap: 3px; z-index: 10;
         }
-        /* FIX: Set player avatar to 60px to match header */
         .player-avatar { width: 60px; height: 60px; border-radius: 50%; background: #333; display: flex; justify-content: center; align-items: center; font-weight: bold; color: #888; font-size: 1.2rem; }
     </style>
 </head>
@@ -95,9 +94,7 @@
         <h1 class="mb-4 fw-bold">Home</h1>
         <div class="top-nav"><div class="nav-item-custom active">FC</div></div>
         <div class="date-bar" id="dateBar"></div> 
-
         <div class="fw-bold mb-3">Games <span class="badge bg-danger ms-2">BETA</span></div>
-        
         <div class="game-card" onclick="openGameDetail()">
             <div class="teams-column">
                 <div class="team-block">
@@ -131,9 +128,7 @@
         </div>
 
         <div id="content-feed" class="tab-content" style="display:none">
-            <div class="p-5 text-center text-muted">
-                <i class="fas fa-stream mb-3 fs-3"></i><br>Feed is empty.
-            </div>
+            <div class="p-5 text-center text-muted"><i class="fas fa-stream mb-3 fs-3"></i><br>Feed is empty.</div>
         </div>
 
         <div id="content-red" class="tab-content">
@@ -145,10 +140,8 @@
                 <div class="header-info">
                     <div class="team-name-header">Red Team</div>
                     <div class="team-stats-row">
-                        <div class="stat-group"><div class="stat-val-big">50%</div><div class="stat-label-small">POS</div></div>
-                        <div class="stat-group"><div class="stat-val-big" id="redHeadGoal">0</div><div class="stat-label-small">GOAL</div></div>
-                        <div class="stat-group"><div class="stat-val-big" id="redHeadSOG">0</div><div class="stat-label-small">SOG</div></div>
-                        <div class="stat-group"><div class="stat-val-big" id="redHeadXG">0.0</div><div class="stat-label-small">xGOT</div></div>
+                        <div class="stat-group"><div class="stat-val-big" id="redPos">50%</div><div class="stat-label-small">POS</div></div>
+                        <div class="stat-group"><div class="stat-val-big" id="redShots">0</div><div class="stat-label-small">SHOTS</div></div>
                     </div>
                 </div>
             </div>
@@ -164,10 +157,8 @@
                 <div class="header-info">
                     <div class="team-name-header">Blue Team</div>
                     <div class="team-stats-row">
-                        <div class="stat-group"><div class="stat-val-big">50%</div><div class="stat-label-small">POS</div></div>
-                        <div class="stat-group"><div class="stat-val-big" id="blueHeadGoal">0</div><div class="stat-label-small">GOAL</div></div>
-                        <div class="stat-group"><div class="stat-val-big" id="blueHeadSOG">0</div><div class="stat-label-small">SOG</div></div>
-                        <div class="stat-group"><div class="stat-val-big" id="blueHeadXG">0.0</div><div class="stat-label-small">xGOT</div></div>
+                        <div class="stat-group"><div class="stat-val-big" id="bluePos">50%</div><div class="stat-label-small">POS</div></div>
+                        <div class="stat-group"><div class="stat-val-big" id="blueShots">0</div><div class="stat-label-small">SHOTS</div></div>
                     </div>
                 </div>
             </div>
@@ -193,7 +184,6 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    // Navigation
     function showHome() { document.getElementById('homeView').classList.add('active'); document.getElementById('gameView').classList.remove('active'); }
     function openGameDetail() { document.getElementById('homeView').classList.remove('active'); document.getElementById('gameView').classList.add('active'); }
     function switchTab(t) {
@@ -201,13 +191,11 @@
         document.getElementById(`content-${t}`).style.display = 'block'; document.getElementById(`tab-${t}`).classList.add('active');
     }
 
-    // Date Bar
     (function() {
         const d = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']; const n = new Date(); const c = document.getElementById('dateBar');
         for(let i=-3; i<=3; i++){ let x = new Date(); x.setDate(n.getDate()+i); c.innerHTML+=`<div class="date-item ${i===0?'active':''}"><div class="date-day">${i===0?'Today':d[x.getDay()]}</div><div class="date-num">${x.getDate()}</div></div>`; }
     })();
 
-    // --- LIVE SYNC & PLAYERS ---
     db.ref('match/current').on('value', snap => {
         const data = snap.val();
         if(!data) return;
@@ -224,22 +212,26 @@
         const stEl = document.getElementById('cardStatus');
         stEl.innerText = st; stEl.className = st==="Live"?"status-live":"text-muted";
 
-        renderTeamStats('Red', data.redPlayers || [], 'redHeadGoal', 'redHeadSOG', 'redHeadXG', 'listRed');
-        renderTeamStats('Blue', data.bluePlayers || [], 'blueHeadGoal', 'blueHeadSOG', 'blueHeadXG', 'listBlue');
+        // RENDER TEAM STATS (New Structure)
+        const teamStats = data.stats || { redPos: 50, bluePos: 50, redShots: 0, blueShots: 0 };
+        document.getElementById('redPos').innerText = teamStats.redPos + '%';
+        document.getElementById('bluePos').innerText = teamStats.bluePos + '%';
+        document.getElementById('redShots').innerText = teamStats.redShots;
+        document.getElementById('blueShots').innerText = teamStats.blueShots;
+
+        // RENDER PLAYERS
+        renderPlayers(data.redPlayers || [], 'listRed');
+        renderPlayers(data.bluePlayers || [], 'listBlue');
     });
 
-    function renderTeamStats(team, players, idG, idS, idX, listId) {
-        let tG=0, tS=0, tX=0;
+    function renderPlayers(players, listId) {
         let html = "";
-        
         if (players.length === 0) {
             html = `<div class="p-4 text-center text-muted">Waiting for game start...</div>`;
         } else {
             players.forEach(p => {
-                tG += p.goals; tS += p.sog; tX += p.xgot;
                 const initials = p.name.substring(0,2).toUpperCase();
-                const comments = Math.floor(Math.random() * 10) + 1; // Dummy data
-                
+                const comments = Math.floor(Math.random() * 10) + 1;
                 html += `
                 <div class="player-row">
                     <div class="avatar-wrapper">
@@ -259,9 +251,6 @@
             });
         }
         document.getElementById(listId).innerHTML = html;
-        document.getElementById(idG).innerText = tG;
-        document.getElementById(idS).innerText = tS;
-        document.getElementById(idX).innerText = (players.length > 0 ? (tX / players.length).toFixed(2) : "0.0");
     }
 </script>
 </body>
