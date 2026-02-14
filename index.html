@@ -48,7 +48,8 @@
         .back-btn-wrapper { position: absolute; left: 0; }
         
         /* TEAM HEADER */
-        .team-stats-header { display: flex; align-items: center; padding: 20px 0; margin-bottom: 10px; /* No border bottom */ }
+        .team-stats-header { display: flex; align-items: center; padding: 20px 0; margin-bottom: 10px; }
+        /* FIX: Set header logo to 60px */
         .header-logo { width: 60px; height: 60px; font-size: 1.5rem; }
         .header-info { flex: 1; margin-left: 20px;}
         .team-name-header { font-size: 1.2rem; font-weight: 800; margin-bottom: 10px; }
@@ -57,8 +58,8 @@
         .stat-val-big { font-size: 1.4rem; font-weight: 800; line-height: 1; }
         .stat-label-small { font-size: 0.7rem; color: var(--text-secondary); font-weight: 700; text-transform: uppercase; }
 
-        /* PLAYER ROWS (Clean, No Lines) */
-        .player-row { display: flex; align-items: center; padding: 15px 0; /* No border bottom */ }
+        /* PLAYER ROWS */
+        .player-row { display: flex; align-items: center; padding: 15px 0; }
         .player-info { flex: 1; }
         .player-name { font-weight: 700; font-size: 1rem; margin-bottom: 6px; }
         .player-stats-grid { display: flex; gap: 25px; }
@@ -66,7 +67,7 @@
         .p-val { font-size: 1.1rem; font-weight: 700; color: white; }
         .p-lbl { font-size: 0.65rem; color: var(--text-secondary); font-weight: 600; text-transform: uppercase; }
 
-        /* COMMENT BADGES */
+        /* COMMENT BADGES & AVATAR SIZING */
         .avatar-wrapper { position: relative; display: inline-block; margin-right: 15px; }
         .comment-badge {
             position: absolute; bottom: -5px; right: -8px;
@@ -75,7 +76,8 @@
             border-radius: 8px; border: 2px solid var(--bg-main);
             display: flex; align-items: center; gap: 3px; z-index: 10;
         }
-        .player-avatar { width: 45px; height: 45px; border-radius: 50%; background: #333; display: flex; justify-content: center; align-items: center; font-weight: bold; color: #888; }
+        /* FIX: Set player avatar to 60px to match header */
+        .player-avatar { width: 60px; height: 60px; border-radius: 50%; background: #333; display: flex; justify-content: center; align-items: center; font-weight: bold; color: #888; font-size: 1.2rem; }
     </style>
 </head>
 <body>
@@ -236,8 +238,7 @@
             players.forEach(p => {
                 tG += p.goals; tS += p.sog; tX += p.xgot;
                 const initials = p.name.substring(0,2).toUpperCase();
-                // Random comment count for effect
-                const comments = Math.floor(Math.random() * 10) + 1; 
+                const comments = Math.floor(Math.random() * 10) + 1; // Dummy data
                 
                 html += `
                 <div class="player-row">
