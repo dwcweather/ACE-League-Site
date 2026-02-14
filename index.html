@@ -43,23 +43,23 @@
         .g-tab { padding: 10px 20px; color: var(--text-secondary); cursor: pointer; font-weight: 600; text-transform: uppercase; }
         .g-tab.active { color: var(--text-primary); border-bottom: 3px solid var(--accent-red); }
 
-        /* DETAIL HEADER */
+        /* HEADER ALIGNMENT */
         .detail-header { position: relative; display: flex; justify-content: center; align-items: center; margin-bottom: 30px; }
         .back-btn-wrapper { position: absolute; left: 0; }
         
-        /* TEAM HEADER (UPDATED) */
-        .team-stats-header { display: flex; align-items: center; padding: 20px 0; margin-bottom: 10px; }
+        /* TEAM HEADER */
+        .team-stats-header { display: flex; align-items: center; padding: 20px 0; margin-bottom: 10px; cursor: pointer; }
         .header-logo { width: 60px; height: 60px; font-size: 1.5rem; }
         .header-info { flex: 1; margin-left: 20px;}
         .team-name-header { font-size: 1.2rem; font-weight: 800; margin-bottom: 10px; }
-        
-        .team-stats-row { display: flex; gap: 30px; } /* Increased gap for cleaner look */
+        .team-stats-row { display: flex; gap: 30px; }
         .stat-group { display: flex; flex-direction: column; }
         .stat-val-big { font-size: 1.6rem; font-weight: 800; line-height: 1; }
         .stat-label-small { font-size: 0.75rem; color: var(--text-secondary); font-weight: 700; text-transform: uppercase; margin-top: 4px;}
 
         /* PLAYER ROWS */
-        .player-row { display: flex; align-items: center; padding: 15px 0; }
+        .player-row { display: flex; align-items: center; padding: 15px 0; cursor: pointer; transition: background 0.2s; }
+        .player-row:hover { background-color: #222; }
         .player-info { flex: 1; }
         .player-name { font-weight: 700; font-size: 1rem; margin-bottom: 6px; }
         .player-stats-grid { display: flex; gap: 25px; }
@@ -77,9 +77,94 @@
             display: flex; align-items: center; gap: 3px; z-index: 10;
         }
         .player-avatar { width: 60px; height: 60px; border-radius: 50%; background: #333; display: flex; justify-content: center; align-items: center; font-weight: bold; color: #888; font-size: 1.2rem; }
+
+        /* --- PERFORMANCE OVERLAY --- */
+        #perfOverlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); z-index: 2000;
+            display: none; flex-direction: column;
+        }
+        .perf-header { padding: 20px; display: flex; justify-content: center; gap: 15px; overflow-x: auto; border-bottom: 1px solid #333; }
+        .perf-toggle-icon { width: 50px; height: 50px; border-radius: 50%; background: #333; color: #888; display: flex; justify-content: center; align-items: center; font-weight: bold; cursor: pointer; opacity: 0.6; border: 2px solid transparent; }
+        .perf-toggle-icon.active { opacity: 1; border-color: var(--accent-red); color: white; }
+        
+        .perf-content { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; overflow-y: auto; }
+        .perf-pfp-large { width: 100px; height: 100px; border-radius: 50%; background: #333; color: #fff; font-size: 2.5rem; display: flex; justify-content: center; align-items: center; margin-bottom: 15px; font-weight: bold; }
+        .perf-name-large { font-size: 1.8rem; font-weight: 800; margin-bottom: 25px; }
+        
+        .perf-stats-main { display: flex; gap: 40px; margin-bottom: 40px; }
+        .perf-main-stat { text-align: center; }
+        .perf-main-val { font-size: 2.5rem; font-weight: 800; line-height: 1; }
+        .perf-main-lbl { font-size: 1rem; color: #888; text-transform: uppercase; margin-top: 5px; }
+
+        .perf-stats-sub { display: flex; gap: 30px; margin-bottom: 40px; background: #111; padding: 15px 30px; border-radius: 12px; }
+        .perf-sub-stat { text-align: center; }
+        .perf-sub-val { font-size: 1.5rem; font-weight: 700; color: #ddd; }
+        .perf-sub-lbl { font-size: 0.8rem; color: #666; text-transform: uppercase; }
+
+        /* REACTION SECTION */
+        .reaction-area { display: flex; align-items: center; gap: 15px; }
+        .add-react-btn { background: #333; border-radius: 50%; width: 45px; height: 45px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 1.2rem; color: #aaa; transition: 0.2s; position: relative; }
+        .add-react-btn:hover { background: #444; color: white; }
+        
+        .top-reactions { display: flex; gap: 10px; }
+        .react-badge { background: #1a1a1a; padding: 5px 10px; border-radius: 20px; border: 1px solid #333; font-size: 0.9rem; display: flex; align-items: center; gap: 5px; color: #ccc; }
+        
+        /* EMOJI POPUP */
+        .emoji-popup {
+            position: absolute; bottom: 60px; left: 50%; transform: translateX(-50%);
+            background: #222; padding: 10px; border-radius: 12px; border: 1px solid #444;
+            display: none; grid-template-columns: repeat(4, 1fr); gap: 10px; width: 200px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+        .emoji-option { font-size: 1.5rem; cursor: pointer; text-align: center; padding: 5px; border-radius: 5px; }
+        .emoji-option:hover { background: #444; }
+        .show-popup { display: grid; }
+
+        .close-perf-btn { position: absolute; top: 20px; right: 20px; background: transparent; border: none; color: #888; font-size: 1.5rem; cursor: pointer; }
     </style>
 </head>
 <body>
+
+<div id="perfOverlay">
+    <button class="close-perf-btn" onclick="closePerf()"><i class="fas fa-times"></i></button>
+    <div class="perf-header" id="perfHeader">
+        </div>
+    <div class="perf-content">
+        <div class="perf-pfp-large" id="perfPfp">A</div>
+        <div class="perf-name-large" id="perfName">Player Name</div>
+
+        <div class="perf-stats-main">
+            <div class="perf-main-stat"><div class="perf-main-val" id="perfGoal">0</div><div class="perf-main-lbl">Goal</div></div>
+            <div class="perf-main-stat"><div class="perf-main-val" id="perfAst">0</div><div class="perf-main-lbl">Ast</div></div>
+            <div class="perf-main-stat"><div class="perf-main-val" id="perfSog">0</div><div class="perf-main-lbl">SOG</div></div>
+        </div>
+
+        <div class="perf-stats-sub">
+            <div class="perf-sub-stat"><div class="perf-sub-val" id="perfKicks">0</div><div class="perf-sub-lbl">Total Kicks</div></div>
+            <div class="perf-sub-stat"><div class="perf-sub-val" id="perfXgot">0.0</div><div class="perf-sub-lbl">xGOT</div></div>
+        </div>
+
+        <div class="reaction-area">
+            <div class="add-react-btn" onclick="toggleEmojiPopup()">
+                <i class="fas fa-smile"></i>
+                <div class="emoji-popup" id="emojiPopup">
+                    <div class="emoji-option" onclick="addReaction('🔥')">🔥</div>
+                    <div class="emoji-option" onclick="addReaction('🐐')">🐐</div>
+                    <div class="emoji-option" onclick="addReaction('💩')">💩</div>
+                    <div class="emoji-option" onclick="addReaction('😃')">😃</div>
+                    <div class="emoji-option" onclick="addReaction('🙄')">🙄</div>
+                    <div class="emoji-option" onclick="addReaction('😭')">😭</div>
+                    <div class="emoji-option" onclick="addReaction('🙏')">🙏</div>
+                    <div class="emoji-option" onclick="addReaction('🏆')">🏆</div>
+                </div>
+            </div>
+            <div class="top-reactions" id="reactionList">
+                </div>
+        </div>
+    </div>
+</div>
+
 
 <div class="sidebar">
     <i class="fas fa-house sidebar-icon active" onclick="showHome()"></i>
@@ -89,7 +174,6 @@
 </div>
 
 <div class="main-content">
-
     <div id="homeView" class="view-section active">
         <h1 class="mb-4 fw-bold">Home</h1>
         <div class="top-nav"><div class="nav-item-custom active">FC</div></div>
@@ -97,51 +181,26 @@
         <div class="fw-bold mb-3">Games <span class="badge bg-danger ms-2">BETA</span></div>
         <div class="game-card" onclick="openGameDetail()">
             <div class="teams-column">
-                <div class="team-block">
-                    <div class="team-logo logo-red">R</div>
-                    <div class="team-details"><div class="score-display" id="cardScoreRed">0</div><div class="team-name-small">Red Team</div></div>
-                </div>
-                <div class="team-block">
-                    <div class="team-logo logo-blue">B</div>
-                    <div class="team-details"><div class="score-display" id="cardScoreBlue">0</div><div class="team-name-small">Blue Team</div></div>
-                </div>
+                <div class="team-block"><div class="team-logo logo-red">R</div><div class="team-details"><div class="score-display" id="cardScoreRed">0</div><div class="team-name-small">Red Team</div></div></div>
+                <div class="team-block"><div class="team-logo logo-blue">B</div><div class="team-details"><div class="score-display" id="cardScoreBlue">0</div><div class="team-name-small">Blue Team</div></div></div>
             </div>
-            <div class="status-column">
-                <div id="cardStatus" class="status-live">Live</div>
-                <small class="text-muted" id="cardTimer">0:00</small>
-            </div>
+            <div class="status-column"><div id="cardStatus" class="status-live">Live</div><small class="text-muted" id="cardTimer">0:00</small></div>
         </div>
     </div>
 
     <div id="gameView" class="view-section">
-        <div class="detail-header">
-            <div class="back-btn-wrapper">
-                <button class="btn btn-outline-secondary btn-sm" onclick="showHome()">Back</button>
-            </div>
-            <h2 class="fw-bold m-0" id="detailScore">0 - 0</h2>
-        </div>
+        <div class="detail-header"><div class="back-btn-wrapper"><button class="btn btn-outline-secondary btn-sm" onclick="showHome()">Back</button></div><h2 class="fw-bold m-0" id="detailScore">0 - 0</h2></div>
+        <div class="game-tabs"><div class="g-tab" onclick="switchTab('feed')" id="tab-feed">Feed</div><div class="g-tab active" style="color:var(--team-red)" onclick="switchTab('red')" id="tab-red">RED</div><div class="g-tab" style="color:var(--team-blue)" onclick="switchTab('blue')" id="tab-blue">BLUE</div></div>
 
-        <div class="game-tabs">
-            <div class="g-tab" onclick="switchTab('feed')" id="tab-feed">Feed</div>
-            <div class="g-tab active" style="color:var(--team-red)" onclick="switchTab('red')" id="tab-red">RED</div>
-            <div class="g-tab" style="color:var(--team-blue)" onclick="switchTab('blue')" id="tab-blue">BLUE</div>
-        </div>
-
-        <div id="content-feed" class="tab-content" style="display:none">
-            <div class="p-5 text-center text-muted"><i class="fas fa-stream mb-3 fs-3"></i><br>Feed is empty.</div>
-        </div>
+        <div id="content-feed" class="tab-content" style="display:none"><div class="p-5 text-center text-muted">Feed is empty.</div></div>
 
         <div id="content-red" class="tab-content">
             <div class="team-stats-header">
-                <div class="avatar-wrapper">
-                    <div class="team-logo logo-red header-logo">R</div>
-                    <div class="comment-badge"><i class="fas fa-comment fa-xs me-1"></i> 4</div>
-                </div>
-                <div class="header-info">
-                    <div class="team-name-header">Red Team</div>
+                <div class="avatar-wrapper"><div class="team-logo logo-red header-logo">R</div></div>
+                <div class="header-info"><div class="team-name-header">Red Team</div>
                     <div class="team-stats-row">
                         <div class="stat-group"><div class="stat-val-big" id="redPos">50%</div><div class="stat-label-small">POS</div></div>
-                        <div class="stat-group"><div class="stat-val-big" id="redShots">0</div><div class="stat-label-small">SHOTS</div></div>
+                        <div class="stat-group"><div class="stat-val-big" id="redShots">0</div><div class="stat-label-small">KICKS</div></div>
                     </div>
                 </div>
             </div>
@@ -150,21 +209,16 @@
 
         <div id="content-blue" class="tab-content" style="display:none">
              <div class="team-stats-header">
-                <div class="avatar-wrapper">
-                    <div class="team-logo logo-blue header-logo">B</div>
-                    <div class="comment-badge"><i class="fas fa-comment fa-xs me-1"></i> 2</div>
-                </div>
-                <div class="header-info">
-                    <div class="team-name-header">Blue Team</div>
+                <div class="avatar-wrapper"><div class="team-logo logo-blue header-logo">B</div></div>
+                <div class="header-info"><div class="team-name-header">Blue Team</div>
                     <div class="team-stats-row">
                         <div class="stat-group"><div class="stat-val-big" id="bluePos">50%</div><div class="stat-label-small">POS</div></div>
-                        <div class="stat-group"><div class="stat-val-big" id="blueShots">0</div><div class="stat-label-small">SHOTS</div></div>
+                        <div class="stat-group"><div class="stat-val-big" id="blueShots">0</div><div class="stat-label-small">KICKS</div></div>
                     </div>
                 </div>
             </div>
             <div id="listBlue"></div>
         </div>
-
     </div>
 </div>
 
@@ -184,6 +238,10 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
+    // STATE
+    let currentMatchData = null;
+    let selectedPlayerName = null;
+
     function showHome() { document.getElementById('homeView').classList.add('active'); document.getElementById('gameView').classList.remove('active'); }
     function openGameDetail() { document.getElementById('homeView').classList.remove('active'); document.getElementById('gameView').classList.add('active'); }
     function switchTab(t) {
@@ -199,6 +257,7 @@
     db.ref('match/current').on('value', snap => {
         const data = snap.val();
         if(!data) return;
+        currentMatchData = data;
 
         document.getElementById('cardScoreRed').innerText = data.red;
         document.getElementById('cardScoreBlue').innerText = data.blue;
@@ -207,37 +266,34 @@
         const m = Math.floor((data.time||0)/60), s = Math.floor((data.time||0)%60);
         const tStr = `${m}:${s.toString().padStart(2,'0')}`;
         document.getElementById('cardTimer').innerText = tStr;
+        document.getElementById('cardStatus').innerText = data.status || "Waiting";
 
-        const st = data.status || "Waiting";
-        const stEl = document.getElementById('cardStatus');
-        stEl.innerText = st; stEl.className = st==="Live"?"status-live":"text-muted";
-
-        // RENDER TEAM STATS (New Structure)
         const teamStats = data.stats || { redPos: 50, bluePos: 50, redShots: 0, blueShots: 0 };
         document.getElementById('redPos').innerText = teamStats.redPos + '%';
         document.getElementById('bluePos').innerText = teamStats.bluePos + '%';
         document.getElementById('redShots').innerText = teamStats.redShots;
         document.getElementById('blueShots').innerText = teamStats.blueShots;
 
-        // RENDER PLAYERS
-        renderPlayers(data.redPlayers || [], 'listRed');
-        renderPlayers(data.bluePlayers || [], 'listBlue');
+        renderPlayers(data.redPlayers || [], 'listRed', 'red');
+        renderPlayers(data.bluePlayers || [], 'listBlue', 'blue');
+        
+        // Refresh overlay if open
+        if(selectedPlayerName) {
+            const allPlayers = [...(data.redPlayers||[]), ...(data.bluePlayers||[])];
+            const p = allPlayers.find(x => x.name === selectedPlayerName);
+            if(p) updatePerfStats(p);
+        }
     });
 
-    function renderPlayers(players, listId) {
+    function renderPlayers(players, listId, team) {
         let html = "";
-        if (players.length === 0) {
-            html = `<div class="p-4 text-center text-muted">Waiting for game start...</div>`;
-        } else {
+        if (players.length === 0) { html = `<div class="p-4 text-center text-muted">Waiting...</div>`; } 
+        else {
             players.forEach(p => {
                 const initials = p.name.substring(0,2).toUpperCase();
-                const comments = Math.floor(Math.random() * 10) + 1;
                 html += `
-                <div class="player-row">
-                    <div class="avatar-wrapper">
-                        <div class="player-avatar">${initials}</div>
-                        <div class="comment-badge"><i class="fas fa-comment fa-xs me-1"></i> ${comments}</div>
-                    </div>
+                <div class="player-row" onclick="openPerfOverlay('${p.name}', '${team}')">
+                    <div class="avatar-wrapper"><div class="player-avatar">${initials}</div></div>
                     <div class="player-info">
                         <div class="player-name">${p.name}</div>
                         <div class="player-stats-grid">
@@ -251,6 +307,71 @@
             });
         }
         document.getElementById(listId).innerHTML = html;
+    }
+
+    // --- PERFORMANCE OVERLAY LOGIC ---
+    function openPerfOverlay(name, team) {
+        selectedPlayerName = name;
+        document.getElementById('perfOverlay').style.display = 'flex';
+        
+        // Populate Header Toggles
+        const players = team === 'red' ? (currentMatchData.redPlayers||[]) : (currentMatchData.bluePlayers||[]);
+        let headerHtml = "";
+        players.forEach(p => {
+            const init = p.name.substring(0,2).toUpperCase();
+            const isActive = p.name === name ? "active" : "";
+            headerHtml += `<div class="perf-toggle-icon ${isActive}" onclick="openPerfOverlay('${p.name}', '${team}')">${init}</div>`;
+        });
+        document.getElementById('perfHeader').innerHTML = headerHtml;
+
+        // Populate Stats
+        const p = players.find(x => x.name === name);
+        if(p) updatePerfStats(p);
+        loadReactions(name);
+    }
+
+    function updatePerfStats(p) {
+        document.getElementById('perfPfp').innerText = p.name.substring(0,2).toUpperCase();
+        document.getElementById('perfName').innerText = p.name;
+        document.getElementById('perfGoal').innerText = p.goals;
+        document.getElementById('perfAst').innerText = p.ast;
+        document.getElementById('perfSog').innerText = p.sog;
+        document.getElementById('perfKicks').innerText = p.kicks || 0; // NEW STAT
+        document.getElementById('perfXgot').innerText = p.xgot.toFixed(2);
+    }
+
+    function closePerf() {
+        document.getElementById('perfOverlay').style.display = 'none';
+        selectedPlayerName = null;
+        document.getElementById('emojiPopup').classList.remove('show-popup');
+    }
+
+    // --- REACTION SYSTEM ---
+    function toggleEmojiPopup() {
+        document.getElementById('emojiPopup').classList.toggle('show-popup');
+    }
+
+    function addReaction(emoji) {
+        if(!selectedPlayerName) return;
+        // Save to Firebase
+        const ref = db.ref(`match/current/reactions/${selectedPlayerName}/${emoji}`);
+        ref.transaction((current) => (current || 0) + 1);
+        document.getElementById('emojiPopup').classList.remove('show-popup');
+    }
+
+    function loadReactions(name) {
+        db.ref(`match/current/reactions/${name}`).on('value', snap => {
+            const val = snap.val();
+            const container = document.getElementById('reactionList');
+            container.innerHTML = "";
+            if(!val) return;
+
+            // Sort by count
+            const sorted = Object.entries(val).sort((a,b) => b[1] - a[1]).slice(0,3);
+            sorted.forEach(([emoji, count]) => {
+                container.innerHTML += `<div class="react-badge">${emoji} ${count}</div>`;
+            });
+        });
     }
 </script>
 </body>
