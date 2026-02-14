@@ -6,54 +6,87 @@
     <title>ACE League Official Hub</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body { background-color: #1a1a1a; color: #e0e0e0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        .card { background-color: #2d2d2d; border: 1px solid #444; margin-bottom: 20px; }
-        .live-badge { background-color: #ff0000; color: white; padding: 2px 8px; border-radius: 4px; font-weight: bold; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
-        .score-box { font-size: 3rem; font-weight: bold; }
-        .team-red { color: #ff6b6b; }
-        .team-blue { color: #4dabf7; }
-        .table-dark { background-color: #2d2d2d; }
-        .nav-tabs .nav-link { color: #aaa; }
-        .nav-tabs .nav-link.active { background-color: #2d2d2d; color: white; border-color: #444 #444 #2d2d2d; }
+        body { background-color: #121212; color: #e0e0e0; font-family: 'Segoe UI', sans-serif; }
+        .card { background-color: #1e1e1e; border: 1px solid #333; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+        
+        /* Badges */
+        .live-badge { background-color: #e50914; color: white; padding: 5px 12px; border-radius: 4px; font-weight: bold; animation: pulse 2s infinite; }
+        .final-badge { background-color: #333; color: #aaa; padding: 5px 12px; border-radius: 4px; font-weight: bold; border: 1px solid #555; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
+
+        /* Scoreboard */
+        .score-box { font-size: 4rem; font-weight: 800; line-height: 1; margin: 10px 0; }
+        .team-red { color: #ff5252; text-shadow: 0 0 10px rgba(255, 82, 82, 0.3); }
+        .team-blue { color: #448aff; text-shadow: 0 0 10px rgba(68, 138, 255, 0.3); }
+        .vs-text { font-size: 1.5rem; color: #555; font-weight: bold; }
+        .timer-display { font-size: 1.8rem; font-family: 'Courier New', monospace; font-weight: bold; color: #fff; background: #000; padding: 5px 15px; border-radius: 5px; display: inline-block; margin-top: 10px; border: 1px solid #333; }
+
+        /* Tables */
+        .table-dark { background-color: #1e1e1e; }
+        .table-dark th { color: #888; border-bottom: 1px solid #444; }
+        .table-dark td { border-bottom: 1px solid #333; vertical-align: middle; }
+        
+        /* Tabs */
+        .nav-tabs { border-bottom: 1px solid #333; }
+        .nav-tabs .nav-link { color: #888; border: none; }
+        .nav-tabs .nav-link.active { background-color: #1e1e1e; color: #fff; border-bottom: 2px solid #e50914; }
+        .nav-tabs .nav-link:hover { color: #fff; }
     </style>
 </head>
 <body>
 
 <div class="container mt-4">
-    <h1 class="text-center mb-4">🏆 ACE Official League</h1>
+    <div class="text-center mb-5">
+        <h1 class="fw-bold tracking-tight">🏆 ACE LEAGUE</h1>
+        <p class="text-muted">Official Live Stats Hub</p>
+    </div>
 
-    <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
-        <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="live-tab" data-bs-toggle="tab" data-bs-target="#live" type="button">🔴 Live Match</button>
+    <ul class="nav nav-tabs mb-4 justify-content-center" id="myTab" role="tablist">
+        <li class="nav-item">
+            <button class="nav-link active" id="live-tab" data-bs-toggle="tab" data-bs-target="#live">🔴 Live Arena</button>
         </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="stats-tab" data-bs-toggle="tab" data-bs-target="#stats" type="button">📊 Leaderboard</button>
+        <li class="nav-item">
+            <button class="nav-link" id="stats-tab" data-bs-toggle="tab" data-bs-target="#stats">📊 Leaderboards</button>
         </li>
     </ul>
 
     <div class="tab-content">
         
         <div class="tab-pane fade show active" id="live">
-            <div class="card text-center">
-                <div class="card-header">
-                    <span id="matchStatus" class="badge bg-secondary">OFFLINE</span>
-                    <span id="matchTime">0:00</span>
-                </div>
-                <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col-4">
-                            <h2 class="team-red">RED</h2>
-                            <div id="scoreRed" class="score-box">0</div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card text-center pb-4">
+                        <div class="card-header border-bottom border-secondary d-flex justify-content-between align-items-center">
+                            <span id="matchStatus" class="badge bg-secondary">WAITING</span>
+                            <small class="text-muted" id="lastEvent">Waiting for connection...</small>
                         </div>
-                        <div class="col-4">
-                            <h3>VS</h3>
-                            <p id="eventFeed" class="text-muted small">Waiting for kickoff...</p>
+                        
+                        <div class="card-body mt-2">
+                            <div class="row align-items-center">
+                                <div class="col-4">
+                                    <h2 class="team-red mb-0">RED</h2>
+                                    <div id="scoreRed" class="score-box">0</div>
+                                </div>
+                                
+                                <div class="col-4">
+                                    <div class="vs-text">VS</div>
+                                    <div id="gameTimer" class="timer-display">0:00</div>
+                                </div>
+                                
+                                <div class="col-4">
+                                    <h2 class="team-blue mb-0">BLUE</h2>
+                                    <div id="scoreBlue" class="score-box">0</div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-4">
-                            <h2 class="team-blue">BLUE</h2>
-                            <div id="scoreBlue" class="score-box">0</div>
+
+                        <div class="mt-3 px-4">
+                            <div class="p-2 rounded bg-dark border border-secondary">
+                                <span class="text-info fw-bold">📢 FEED:</span> 
+                                <span id="feedText" class="text-light">Waiting for match to start...</span>
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -61,13 +94,12 @@
 
         <div class="tab-pane fade" id="stats">
             <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">All-Time Statistics</h5>
+                <div class="card-body p-0">
                     <div class="table-responsive">
-                        <table class="table table-dark table-striped table-hover">
-                            <thead>
+                        <table class="table table-dark table-hover mb-0">
+                            <thead class="bg-secondary">
                                 <tr>
-                                    <th>Rank</th>
+                                    <th class="ps-4">#</th>
                                     <th>Player</th>
                                     <th>ELO</th>
                                     <th>Goals</th>
@@ -77,7 +109,7 @@
                                 </tr>
                             </thead>
                             <tbody id="leaderboardBody">
-                                <tr><td colspan="7" class="text-center">Loading stats...</td></tr>
+                                <tr><td colspan="7" class="text-center py-4 text-muted">Loading stats from cloud...</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -93,7 +125,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    // --- 1. FIREBASE CONFIGURATION (PASTE YOUR KEYS HERE) ---
+    // --- 1. CONFIGURATION ---
     const firebaseConfig = {
         apiKey: "AIzaSyBqw8ZUxSkV86b3stqkRndGaIUfAEctvdY",
         authDomain: "ace-league-c638f.firebaseapp.com",
@@ -104,37 +136,73 @@
         appId: "1:41360854333:web:869ced84b4f30d43c50954"
     };
 
-    // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    // --- 2. LIVE MATCH LISTENER ---
+    // --- 2. TIMER LOGIC ---
+    let localSeconds = 0;
+    let isMatchLive = false;
+    let timerInterval = null;
+
+    function startTimer() {
+        if (timerInterval) clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+            if (isMatchLive) {
+                localSeconds++;
+                updateTimerDisplay(localSeconds);
+            }
+        }, 1000); // Tick every 1 second
+    }
+
+    function updateTimerDisplay(totalSeconds) {
+        const minutes = Math.floor(totalSeconds / 60);
+        const seconds = Math.floor(totalSeconds % 60);
+        document.getElementById('gameTimer').innerText = 
+            `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    }
+
+    // --- 3. LISTEN TO LIVE MATCH ---
     db.ref('match/current').on('value', (snapshot) => {
         const data = snapshot.val();
         if (!data) return;
 
-        // Update Scores
+        // Sync Scores
         document.getElementById('scoreRed').innerText = data.red;
         document.getElementById('scoreBlue').innerText = data.blue;
-        document.getElementById('eventFeed').innerText = data.lastEvent;
+        document.getElementById('feedText').innerText = data.lastEvent;
 
-        // Update Time Format
-        const minutes = Math.floor(data.time / 60);
-        const seconds = Math.floor(data.time % 60);
-        document.getElementById('matchTime').innerText = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        // Sync Timer (Official Time from Bot)
+        // We overwrite our local timer with the official time to stay in sync
+        localSeconds = Math.floor(data.time);
+        updateTimerDisplay(localSeconds);
 
-        // Update Status Badge
+        // Update Status & Logic
         const statusEl = document.getElementById('matchStatus');
+        
         if (data.status === "Live") {
             statusEl.className = "live-badge";
-            statusEl.innerText = "🔴 LIVE";
-        } else {
+            statusEl.innerText = "🔴 LIVE MATCH";
+            isMatchLive = true;
+            if (!timerInterval) startTimer(); // Start ticking if not already
+        } 
+        else if (data.status === "Final") {
+            statusEl.className = "final-badge";
+            statusEl.innerText = "🏁 FINAL";
+            isMatchLive = false; // Stop ticking
+            if (timerInterval) clearInterval(timerInterval);
+            timerInterval = null;
+        }
+        else {
+            // Waiting or Offline
             statusEl.className = "badge bg-secondary";
-            statusEl.innerText = data.status;
+            statusEl.innerText = "WAITING";
+            isMatchLive = false;
+            localSeconds = 0;
+            updateTimerDisplay(0);
         }
     });
 
-    // --- 3. LEADERBOARD LISTENER ---
+    // --- 4. LEADERBOARD LOGIC ---
     db.ref('stats').on('value', (snapshot) => {
         const data = snapshot.val();
         if (!data) return;
@@ -144,7 +212,6 @@
         const tbody = document.getElementById('leaderboardBody');
         tbody.innerHTML = '';
 
-        // Convert object to array for sorting
         let players = Object.keys(allTime).map(name => {
             const s = allTime[name];
             const e = eloData[name] || { elo: 800 };
@@ -158,16 +225,21 @@
             };
         });
 
-        // Sort by ELO (Highest first)
-        players.sort((a, b) => b.elo - a.elo);
+        players.sort((a, b) => b.elo - a.elo); // Sort by ELO
 
-        // Render Table
         players.forEach((p, index) => {
-            const winRate = p.games > 0 ? ((p.wins / p.games) * 100).toFixed(1) + '%' : '0%';
+            const winRate = p.games > 0 ? ((p.wins / p.games) * 100).toFixed(0) + '%' : '0%';
+            
+            // Highlight Top 3
+            let rankClass = "";
+            if (index === 0) rankClass = "text-warning fw-bold"; // Gold
+            if (index === 1) rankClass = "text-secondary fw-bold"; // Silver
+            if (index === 2) rankClass = "text-danger fw-bold"; // Bronze
+
             const row = `<tr>
-                <td>#${index + 1}</td>
-                <td><strong>${p.name}</strong></td>
-                <td><span class="badge bg-warning text-dark">${p.elo}</span></td>
+                <td class="ps-4 ${rankClass}">#${index + 1}</td>
+                <td><strong class="text-light">${p.name}</strong></td>
+                <td><span class="badge bg-dark border border-secondary">${p.elo}</span></td>
                 <td>${p.goals}</td>
                 <td>${p.assists}</td>
                 <td>${p.games}</td>
