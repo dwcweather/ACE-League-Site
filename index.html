@@ -28,7 +28,7 @@
         .sidebar { width: 70px; height: 100vh; position: fixed; top: 0; left: 0; border-right: 1px solid var(--border-color); display: flex; flex-direction: column; align-items: center; padding-top: 20px; z-index: 1000; background: var(--bg-main); }
         .sidebar-icon { font-size: 1.5rem; color: var(--text-secondary); margin-bottom: 35px; cursor: pointer; transition: 0.2s; position: relative; }
         .sidebar-icon.active, .sidebar-icon:hover { color: var(--text-primary); }
-        /* PFP FIX: Removed 'fa' classes, pure div for background image */
+        /* PFP FIX: Pure div for background image */
         .pfp-icon { width: 40px; height: 40px; border-radius: 50%; background-size: cover; background-position: center; border: 2px solid #333; margin-top: auto; margin-bottom: 20px; background-color: #222; }
 
         .main-content { margin-left: 70px; padding: 20px 30px; max-width: 1200px; }
@@ -55,7 +55,50 @@
         .logo-red { background: var(--team-red); } .logo-blue { background: var(--team-blue); }
         .live-badge { background: var(--accent-red); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; margin-left: 10px; }
 
-        /* --- RED/BLUE TABS --- */
+        /* --- AUCTION HOUSE --- */
+        .auction-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
+        .auction-card-wrapper { background: #121212; border-radius: 12px; padding: 15px; border: 1px solid #333; position: relative; transition: transform 0.2s; }
+        .auction-card-wrapper:hover { border-color: #555; transform: translateY(-2px); }
+        .auc-timer-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; color: #888; font-weight: 700; font-size: 0.9rem; }
+        .auc-timer { color: white; display: flex; align-items: center; gap: 5px; }
+        .auc-bids { color: var(--accent-red); display: flex; align-items: center; gap: 5px; }
+        .flip-animate { animation: flip 0.3s ease; display: inline-block; }
+        @keyframes flip { 0% { transform: scale(1); } 50% { transform: scale(1.2); color: white; } 100% { transform: scale(1); } }
+        
+        .auc-actions { margin-top: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .auc-price { font-size: 1.4rem; font-weight: 800; color: white; }
+        .auc-price.winning { color: #00e676; } /* Green if leading */
+        .auc-bid-btn { background: var(--accent-red); color: white; border: none; padding: 5px 20px; border-radius: 20px; font-weight: bold; cursor: pointer; }
+        .auc-bid-btn:hover { background: #ff1f1f; }
+
+        /* --- CARD VISUAL (Corrected Layout) --- */
+        .card-visual { width: 100%; aspect-ratio: 0.7; border-radius: 12px; position: relative; margin: 0 auto; color: white; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.6); display: flex; flex-direction: column; padding: 15px; border: 1px solid rgba(255,255,255,0.1); }
+        
+        /* Rarity Gradients */
+        .rarity-Common { background: linear-gradient(145deg, #1e3c72, #2a5298); }
+        .rarity-Uncommon { background: linear-gradient(145deg, #11998e, #38ef7d); }
+        .rarity-Rare { background: linear-gradient(145deg, #f12711, #f5af19); }
+        .rarity-Epic { background: linear-gradient(145deg, #8E0E00, #1F1C18); }
+        .rarity-Legendary { background: linear-gradient(145deg, #4A00E0, #8E2DE2); }
+        .rarity-Mystic { background: linear-gradient(145deg, #FDC830, #F37335); color:black; }
+        .rarity-Iconic { background: linear-gradient(145deg, #ff00cc, #333399); }
+
+        .cv-top { display: flex; justify-content: space-between; align-items: center; font-weight: 900; font-size: 1.1rem; text-transform: uppercase; margin-bottom: 10px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+        .cv-rating { font-size: 1.4rem; }
+        .cv-badge-container { display: flex; justify-content: center; margin-bottom: 20px; }
+        .cv-badge { background: rgba(255,255,255,0.9); color: black; font-weight: 900; font-size: 0.7rem; padding: 4px 12px; border-radius: 4px; text-transform: uppercase; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        
+        .cv-icons { display: flex; justify-content: center; gap: 10px; margin-bottom: 30px; }
+        .cv-icon { width: 50px; height: 50px; border-radius: 50%; background: rgba(0,0,0,0.3); border: 2px solid rgba(255,255,255,0.3); display: flex; justify-content: center; align-items: center; font-size: 1.6rem; box-shadow: 0 4px 8px rgba(0,0,0,0.3); }
+        
+        .cv-text-area { text-align: center; margin-bottom: auto; }
+        .cv-title { font-weight: 900; font-size: 1.2rem; line-height: 1.2; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,0.5); margin-bottom: 5px; }
+        .cv-player { font-weight: 700; font-size: 1rem; opacity: 0.9; }
+        
+        .cv-footer { display: flex; justify-content: space-between; align-items: flex-end; font-size: 0.8rem; font-weight: 700; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.2); opacity: 0.9; }
+        .cv-score { font-size: 1rem; }
+
+        /* --- RED/BLUE TAB PLAYER ROWS --- */
         .team-stats-header { display: flex; align-items: center; padding: 20px 0; margin-bottom: 10px; border-bottom: 1px solid #222; }
         .header-logo { width: 60px; height: 60px; font-size: 1.5rem; margin-right: 20px; }
         .team-name-header { font-size: 1.2rem; font-weight: 800; margin-bottom: 10px; }
@@ -65,52 +108,38 @@
 
         .player-row { display: flex; align-items: center; padding: 15px 0; cursor: pointer; transition: background 0.2s; border-bottom: 1px solid #111; }
         .player-row:hover { background-color: #1a1a1a; }
-        
         .avatar-wrapper { position: relative; display: inline-block; margin-right: 20px; }
         .player-avatar { width: 60px; height: 60px; border-radius: 50%; background: #333; display: flex; justify-content: center; align-items: center; font-weight: bold; color: #888; font-size: 1.2rem; }
-        .comment-badge {
-            position: absolute; bottom: -5px; right: -8px;
-            background-color: var(--accent-red); color: white;
-            font-size: 0.7rem; font-weight: bold; padding: 2px 6px;
-            border-radius: 8px; border: 2px solid var(--bg-main);
-            display: flex; align-items: center; gap: 3px; z-index: 10;
-        }
-
+        .comment-badge { position: absolute; bottom: -5px; right: -8px; background-color: var(--accent-red); color: white; font-size: 0.7rem; font-weight: bold; padding: 2px 6px; border-radius: 8px; border: 2px solid var(--bg-main); display: flex; align-items: center; gap: 3px; z-index: 10; }
         .player-info { flex: 1; }
         .player-name { font-weight: 700; font-size: 1.1rem; margin-bottom: 4px; }
         .player-stats-grid { display: flex; gap: 25px; margin-bottom: 6px; }
         .p-stat { display: flex; flex-direction: column; align-items: center; min-width: 30px; }
         .p-val { font-size: 1.1rem; font-weight: 700; color: white; }
         .p-lbl { font-size: 0.65rem; color: var(--text-secondary); font-weight: 600; text-transform: uppercase; }
-        
-        /* RESTORED REACTION ROW */
+        /* Top 3 Reactions */
         .reaction-row { display: flex; gap: 8px; font-size: 0.8rem; color: #ccc; }
         .tiny-react { background: #222; border: 1px solid #333; padding: 1px 6px; border-radius: 8px; display: flex; align-items: center; gap: 4px; }
 
-        /* --- OVERLAYS --- */
+        /* --- PERFORMANCE OVERLAY (Popup) --- */
         #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 2000; display: none; flex-direction: column; overflow-y: auto; }
         .overlay-content { max-width: 600px; width: 100%; margin: 0 auto; padding: 20px; }
-        
-        /* Perf View Elements */
         .perf-top-scroller { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 15px; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); }
         .perf-pill { display: flex; flex-direction: column; align-items: center; min-width: 50px; cursor: pointer; opacity: 0.6; transition: 0.2s; }
         .perf-pill.active, .perf-pill:hover { opacity: 1; }
         .perf-pill-rating { font-size: 0.75rem; font-weight: 800; background: #222; padding: 2px 6px; border-radius: 4px; margin-bottom: -8px; z-index: 2; border: 1px solid #444; }
         .perf-pill-img { width: 45px; height: 45px; border-radius: 50%; background: #333; display: flex; justify-content: center; align-items: center; font-weight: bold; border: 2px solid transparent; }
         .perf-pill.active .perf-pill-img { border-color: var(--accent-red); }
-
         .perf-hero { display: flex; align-items: center; gap: 20px; margin-bottom: 20px; }
         .perf-hero-img { width: 80px; height: 80px; border-radius: 50%; background: #333; display: flex; justify-content: center; align-items: center; font-size: 2rem; font-weight: bold; }
         .perf-hero-info { flex: 1; }
         .perf-hero-name { font-size: 1.8rem; font-weight: 800; line-height: 1; }
         .perf-hero-team { color: var(--text-secondary); font-weight: 600; text-transform: uppercase; font-size: 0.85rem; }
         .perf-hero-rating { font-size: 1.5rem; font-weight: 800; color: var(--accent-red); text-align: right; }
-
         .perf-stats-main { display: flex; gap: 25px; margin-bottom: 15px; align-items: baseline; }
         .ps-val { font-size: 2rem; font-weight: 800; line-height: 1; }
         .ps-lbl { font-size: 0.9rem; color: #888; font-weight: 600; margin-left: 2px; }
         .ps-sub { font-size: 1.1rem; color: #666; font-weight: 700; }
-
         .perf-hashtags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
         .p-tag { color: var(--accent-red); font-weight: 700; font-size: 0.9rem; }
         .action-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid var(--border-color); }
@@ -118,7 +147,6 @@
         .add-react-circle { width: 35px; height: 35px; border-radius: 50%; background: #222; color: #aaa; display: flex; justify-content: center; align-items: center; cursor: pointer; }
         .add-react-circle:hover { background: #333; color: white; }
         .rax-pill { background: #1a1a1a; border: 1px solid #333; padding: 5px 12px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; display: flex; align-items: center; gap: 6px; }
-        
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); gap: 15px; background: #1a1a1a; padding: 20px; border-radius: 12px; }
         .sg-box { display: flex; flex-direction: column; }
         .sg-val { font-size: 1.2rem; font-weight: 800; color: white; }
@@ -139,31 +167,25 @@
         .feed-tags { display: flex; gap: 6px; margin-bottom: 8px; }
         .f-tag { font-size: 0.7rem; background: #222; padding: 2px 6px; border-radius: 4px; color: #aaa; border: 1px solid #333; }
         .feed-reacts { display: flex; gap: 6px; align-items: center; }
+        .react-pill { background: #1a1a1a; border: 1px solid #333; padding: 1px 8px; border-radius: 10px; color: #ccc; font-size: 0.75rem; }
         .feed-comments-count { color: #666; font-size: 0.85rem; display: flex; align-items: center; gap: 5px; }
 
-        /* CARD VISUAL */
-        .card-visual { width: 280px; height: 420px; border-radius: 12px; position: relative; margin: 0 auto; color: white; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.6); display: flex; flex-direction: column; padding: 15px; border: 1px solid rgba(255,255,255,0.1); }
-        .rarity-Common { background: linear-gradient(145deg, #1e3c72, #2a5298); }
-        .rarity-Uncommon { background: linear-gradient(145deg, #11998e, #38ef7d); }
-        .rarity-Rare { background: linear-gradient(145deg, #f12711, #f5af19); }
-        .rarity-Epic { background: linear-gradient(145deg, #8E0E00, #1F1C18); }
-        .rarity-Legendary { background: linear-gradient(145deg, #4A00E0, #8E2DE2); }
-        .rarity-Mystic { background: linear-gradient(145deg, #FDC830, #F37335); }
-        .rarity-Iconic { background: linear-gradient(145deg, #ff00cc, #333399); }
-        
-        .cv-top { display: flex; justify-content: space-between; align-items: center; font-weight: 900; font-size: 1.1rem; text-transform: uppercase; margin-bottom: 20px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
-        .cv-badge { background: white; color: black; font-weight: 900; font-size: 0.7rem; padding: 4px 10px; border-radius: 4px; align-self: center; text-transform: uppercase; margin-bottom: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        .cv-icons { display: flex; justify-content: center; gap: 10px; margin-bottom: 30px; }
-        .cv-icon { width: 45px; height: 45px; border-radius: 50%; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.3); display: flex; justify-content: center; align-items: center; font-size: 1.4rem; }
-        .cv-title { text-align: center; font-weight: 900; font-size: 1.3rem; line-height: 1.1; margin-bottom: 20px; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
-        .cv-player { display: flex; align-items: center; gap: 10px; margin-top: auto; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.2); }
-        .cv-pfp { width: 35px; height: 35px; border-radius: 50%; background: #000; display: flex; justify-content: center; align-items: center; font-weight: bold; }
-        .cv-meta { display: flex; justify-content: space-between; font-size: 0.7rem; font-weight: 700; margin-top: 10px; opacity: 0.8; }
-
-        /* AUTH */
-        #authOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 3000; display: flex; align-items: center; justify-content: center; }
+        /* AUTH & BID OVERLAYS */
+        #authOverlay, #bidOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 3000; display: flex; align-items: center; justify-content: center; }
+        #bidOverlay { display: none; z-index: 2000; flex-direction: column; overflow-y: auto; background: #000; }
         .auth-box { background: #1a1a1a; padding: 40px; border-radius: 16px; width: 100%; max-width: 400px; text-align: center; border: 1px solid #333; }
+        .auth-input { width: 100%; background: #222; border: 1px solid #444; color: white; padding: 10px; margin-bottom: 15px; border-radius: 6px; }
+        .auth-btn { width: 100%; background: var(--accent-red); color: white; border: none; padding: 10px; border-radius: 6px; font-weight: bold; cursor: pointer; }
         
+        .bid-box { background: #1a1a1a; padding: 30px; border-radius: 16px; border: 1px solid #333; width: 90%; max-width: 400px; }
+        .bid-current { font-size: 2.5rem; font-weight: 800; margin: 20px 0; text-align: center; }
+        .quick-bids { display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; }
+        .q-bid-btn { background: #222; border: 1px solid #444; color: white; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        .q-bid-btn:hover { background: #333; border-color: #666; }
+        .bid-slider-container { margin: 20px 0; }
+        .bid-range { width: 100%; accent-color: var(--accent-red); }
+        .user-balance { color: #888; font-size: 0.9rem; margin-top: 10px; text-align: center; }
+
         .detail-header-wrapper { position: relative; margin-bottom: 30px; }
         .gh-back-btn { position: absolute; left: 0; top: 10px; }
         .scoreboard-row { display: flex; justify-content: center; align-items: center; gap: 40px; margin-bottom: 10px; }
@@ -186,6 +208,10 @@
         .comment-user { font-weight: bold; font-size: 0.9rem; color: #ccc; margin-bottom: 2px; display:flex; justify-content:space-between;}
         .comment-text { color: white; font-size: 0.95rem; }
         .comment-upvotes { font-size: 0.8rem; color: #666; }
+        
+        .card-tabs { display: flex; gap: 20px; border-bottom: 1px solid #333; margin-bottom: 20px; padding-bottom: 10px; }
+        .c-tab { color: #888; cursor: pointer; font-weight: bold; }
+        .c-tab.active { color: white; border-bottom: 2px solid var(--accent-red); }
     </style>
 </head>
 <body>
@@ -196,6 +222,29 @@
         <div class="mb-3"><input type="text" id="regName" class="form-control bg-dark text-white border-secondary" placeholder="Display Name"></div>
         <div class="mb-3"><input type="text" id="regPfp" class="form-control bg-dark text-white border-secondary" placeholder="PFP URL (Optional)"></div>
         <button class="btn btn-danger w-100 fw-bold" onclick="registerUser()">Enter Hub</button>
+    </div>
+</div>
+
+<div id="bidOverlay">
+    <div class="bid-box">
+        <div class="d-flex justify-content-between mb-4">
+            <h4 class="fw-bold m-0">Place Bid</h4>
+            <button class="btn btn-sm btn-outline-secondary" onclick="document.getElementById('bidOverlay').style.display='none'"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="text-secondary text-uppercase fw-bold" style="font-size:0.8rem">Current Bid</div>
+        <div class="bid-current" id="bidModalCurrent">0</div>
+        
+        <div class="text-secondary text-uppercase fw-bold mb-2" style="font-size:0.8rem">Quick Bids</div>
+        <div class="quick-bids" id="quickBidContainer"></div>
+        
+        <div class="text-secondary text-uppercase fw-bold mb-2" style="font-size:0.8rem">Custom Bid</div>
+        <div class="bid-slider-container">
+            <input type="range" min="0" max="1000" value="0" class="bid-range" id="bidSlider" oninput="updateCustomBid(this.value)">
+        </div>
+        <div class="text-center fw-bold fs-4 mb-4" id="customBidVal">0</div>
+        
+        <button class="auth-btn" onclick="submitBid()">Place Bid</button>
+        <div class="user-balance text-center"><i class="fas fa-coins me-1"></i> <span id="userBalance">500</span> balance</div>
     </div>
 </div>
 
@@ -220,7 +269,7 @@
 <div class="sidebar">
     <i class="fas fa-house sidebar-icon active" onclick="switchView('homeView', this)"></i>
     <i class="fas fa-layer-group sidebar-icon" onclick="switchView('cardsView', this)"></i>
-    <i class="fas fa-gavel sidebar-icon"></i>
+    <i class="fas fa-gavel sidebar-icon" onclick="switchView('auctionView', this)"></i>
     <div class="sidebar-icon pfp-icon" id="sidebarPfp"></div>
 </div>
 
@@ -241,6 +290,13 @@
                 <div class="gc-score" id="cardScoreBlue">0</div>
             </div>
             <div class="text-center mt-3 text-muted fw-bold" id="cardTimer">0:00</div>
+        </div>
+    </div>
+
+    <div id="auctionView" class="view-section">
+        <h1 class="page-title mb-4">Auction House</h1>
+        <div class="auction-grid" id="auctionList">
+            <div class="text-muted">Loading market...</div>
         </div>
     </div>
 
@@ -322,13 +378,15 @@
     let activeOverlayType = null; 
     let activeOverlayId = null; 
     let listeners = { perf: null, comments: null };
+    let selectedAuctionId=null; 
+    let userBalance=500;
 
     // AUTH
     function registerUser() {
         const name = document.getElementById('regName').value;
         const pfp = document.getElementById('regPfp').value || "https://via.placeholder.com/50";
         if(name) {
-            localStorage.setItem('aceUser', JSON.stringify({name, pfp}));
+            localStorage.setItem('aceUser', JSON.stringify({name, pfp, balance:500}));
             document.getElementById('authOverlay').style.display = 'none';
             loadUser();
         }
@@ -338,6 +396,7 @@
         if(u) {
             document.getElementById('authOverlay').style.display = 'none';
             document.getElementById('sidebarPfp').style.backgroundImage = `url(${u.pfp})`; 
+            userBalance=u.balance||500;
         }
     }
     loadUser();
@@ -358,7 +417,7 @@
         document.getElementById(`tab-${t}`).classList.add('active'); 
     }
 
-    // DATA
+    // DATA SYNC
     db.ref('match/current').on('value', snap => {
         const data = snap.val(); if(!data) return;
         currentMatchData = data;
@@ -379,6 +438,49 @@
         renderFeed(data.feed||{});
         
         if(activeOverlayType === 'perf') updatePerfOverlay();
+    });
+
+    // AUCTIONS
+    db.ref('auctions').on('value', snap => {
+        const data = snap.val();
+        const c = document.getElementById('auctionList');
+        if(!data) { c.innerHTML="<div class='text-muted'>No active auctions</div>"; return; }
+        
+        let h = "";
+        Object.entries(data).forEach(([key, auc]) => {
+            if(auc.status !== 'Active') return;
+            const timeLeft = Math.max(0, Math.floor((auc.endTime - Date.now())/1000));
+            const mins = Math.floor(timeLeft/60); const secs = (timeLeft%60).toString().padStart(2,'0');
+            const u = JSON.parse(localStorage.getItem('aceUser'));
+            const isWinning = u && auc.highestBidder === u.name;
+            
+            // Emoji logic
+            let icons = ""; if(auc.cardData.type==='goal') icons="⚽"; if(auc.cardData.tags?.includes('dagger')) icons+="🗡️";
+
+            h += `
+            <div class="auction-card-wrapper">
+                <div class="auc-timer-bar">
+                    <div class="auc-timer"><i class="fas fa-clock"></i> ${mins}:${secs}</div>
+                    <div class="auc-bids"><i class="fas fa-gavel"></i> <span class="flip-animate">${auc.bidCount}</span></div>
+                </div>
+                <div class="card-visual rarity-${auc.cardData.rarity}" style="transform:scale(0.9); margin-bottom:0;">
+                    <div class="cv-top"><span>${auc.cardData.type}</span><span class="cv-rating">▼ ${auc.cardData.rating}</span></div>
+                    <div class="cv-badge-container"><div class="cv-badge">${auc.cardData.rarity}</div></div>
+                    <div class="cv-icons">${icons}</div>
+                    <div class="cv-text-area">
+                        <div class="cv-title">${auc.cardData.text}</div>
+                        <div class="cv-player">${auc.cardData.player}</div>
+                    </div>
+                    <div class="cv-footer"><span>STG 2026</span><span>#${auc.serial}</span></div>
+                </div>
+                <div class="auc-actions">
+                    <div class="auc-price ${isWinning?'winning':''}">🪙 ${auc.currentBid}</div>
+                    <button class="auc-bid-btn" onclick="openBidModal('${key}', ${auc.currentBid})">Bid</button>
+                </div>
+                <div class="text-end text-muted small mt-1">Lead: ${auc.highestBidder}</div>
+            </div>`;
+        });
+        c.innerHTML = h || "<div class='text-muted'>No active auctions</div>";
     });
 
     // RENDERERS
@@ -415,7 +517,7 @@
         c.innerHTML = h;
     }
 
-    // FIXED PLAYER LIST WITH REACTIONS
+    // UPDATED PLAYER LIST (With Top 3 Reactions)
     function renderList(players, listId, team) {
         let h = "";
         players.forEach(p => {
@@ -464,15 +566,14 @@
         
         const html = `
         <div class="card-visual rarity-${data.rarity||'Common'}">
-            <div class="cv-top"><span>${data.type.toUpperCase().replace('_',' ')}</span><span>${data.rating}</span></div>
-            <div class="cv-badge">${data.rarity||'Common'}</div>
+            <div class="cv-top"><span>${data.type.toUpperCase().replace('_',' ')}</span><span class="cv-rating">▼ ${data.rating || '5.0'}</span></div>
+            <div class="cv-badge-container"><div class="cv-badge">${data.rarity||'Common'}</div></div>
             <div class="cv-icons">${icons}</div>
-            <div class="cv-title">${data.text}</div>
-            <div class="cv-player">
-                <div class="cv-pfp">${data.player.substring(0,2)}</div>
-                <div>${data.player}</div>
+            <div class="cv-text-area">
+                <div class="cv-title">${data.text}</div>
+                <div class="cv-player">${data.player}</div>
             </div>
-            <div class="cv-meta"><span>STG 2026</span><span>#${data.serial||1}</span></div>
+            <div class="cv-footer"><span>STG 2026</span><span>#${data.serial||1}</span></div>
         </div>`;
         
         document.getElementById('overlayBody').innerHTML = html;
@@ -547,6 +648,45 @@
         if(listeners.comments) listeners.comments.off();
     }
 
+    // BIDDING
+    function openBidModal(key, currentBid) {
+        selectedAuctionId = key;
+        document.getElementById('bidOverlay').style.display='flex';
+        document.getElementById('bidModalCurrent').innerText = currentBid;
+        document.getElementById('userBalance').innerText = userBalance;
+        
+        let inc = currentBid < 100 ? 10 : (currentBid < 500 ? 50 : 100);
+        let qb = `<div class="q-bid-btn" onclick="updateCustomBid(${currentBid+inc})">+${inc}</div>
+                  <div class="q-bid-btn" onclick="updateCustomBid(${currentBid+(inc*2)})">+${inc*2}</div>
+                  <div class="q-bid-btn" onclick="updateCustomBid(${currentBid+(inc*5)})">+${inc*5}</div>`;
+        document.getElementById('quickBidContainer').innerHTML = qb;
+        
+        document.getElementById('bidSlider').min = currentBid + inc;
+        document.getElementById('bidSlider').max = currentBid + 1000;
+        document.getElementById('bidSlider').value = currentBid + inc;
+        updateCustomBid(currentBid + inc);
+    }
+
+    function updateCustomBid(val) {
+        document.getElementById('customBidVal').innerText = val;
+        document.getElementById('bidSlider').value = val;
+    }
+
+    function submitBid() {
+        const amt = parseInt(document.getElementById('customBidVal').innerText);
+        const u = JSON.parse(localStorage.getItem('aceUser'));
+        if(amt > userBalance) { alert("Insufficient funds"); return; }
+        
+        db.ref(`auctions/${selectedAuctionId}`).transaction(curr => {
+            if (curr && amt > curr.currentBid) {
+                curr.currentBid = amt; curr.bidCount++; curr.highestBidder = u.name;
+                if (curr.endTime - Date.now() < 30000) curr.endTime = Date.now() + 60000;
+                return curr;
+            }
+        });
+        document.getElementById('bidOverlay').style.display='none';
+    }
+
     // COMMENTS & REACTIONS
     function toggleEmojiPopup(el, type, id) {
         reactionTargetType = type; reactionTargetId = id;
@@ -587,7 +727,6 @@
         }
     }
 
-    // Date Bar
     (function() { const d=['Sun','Mon','Tue','Wed','Thu','Fri','Sat']; const n=new Date(); const c=document.getElementById('dateBar'); for(let i=-3; i<=3; i++){ let x=new Date(); x.setDate(n.getDate()+i); c.innerHTML+=`<div class="date-item ${i===0?'active':''}"><div class="date-day">${i===0?'Today':d[x.getDay()]}</div><div class="date-num">${x.getDate()}</div></div>`; } })();
 </script>
 </body>
