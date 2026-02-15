@@ -17,15 +17,17 @@
         .pfp-icon { font-size: 1.8rem; margin-top: 10px; }
         
         .main-content { margin-left: 70px; padding: 20px 40px; }
-        .view-section { display: none; } .view-section.active { display: block; }
+        .view-section { display: none; } .view-section.active { display: block; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* HOME & GAME CARD STYLES */
         .top-nav { display: flex; gap: 30px; margin-bottom: 30px; border-bottom: 1px solid var(--border-color); }
         .nav-item-custom { font-weight: 700; color: var(--text-secondary); padding-bottom: 10px; border-bottom: 3px solid transparent; }
         .nav-item-custom.active { color: var(--text-primary); border-color: var(--accent-red); }
         .date-bar { display: flex; justify-content: space-between; margin-bottom: 40px; max-width: 600px; }
         .date-item { text-align: center; color: var(--text-secondary); } .date-item.active .date-num { background: var(--bg-card); color: white; }
         .date-num { width: 36px; height: 36px; display: flex; justify-content: center; align-items: center; border-radius: 50%; font-weight: 700; }
-
-        /* GAME CARD */
+        
         .game-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; width: 320px; padding: 20px; position: relative; cursor: pointer; transition: transform 0.2s; }
         .game-card:hover { border-color: #555; transform: translateY(-2px); }
         .teams-column { display: flex; flex-direction: column; gap: 15px; }
@@ -38,17 +40,14 @@
         .status-column { position: absolute; top: 20px; right: 20px; text-align: right; }
         .status-live { color: var(--accent-red); font-weight: bold; }
 
-        /* TABS */
+        /* GAME DETAIL STYLES */
+        .detail-header { position: relative; display: flex; justify-content: center; align-items: center; margin-bottom: 30px; }
+        .back-btn-wrapper { position: absolute; left: 0; }
         .game-tabs { display: flex; justify-content: space-around; border-bottom: 1px solid var(--border-color); margin-bottom: 20px; }
         .g-tab { padding: 10px 20px; color: var(--text-secondary); cursor: pointer; font-weight: 600; text-transform: uppercase; }
         .g-tab.active { color: var(--text-primary); border-bottom: 3px solid var(--accent-red); }
-
-        /* HEADER ALIGNMENT */
-        .detail-header { position: relative; display: flex; justify-content: center; align-items: center; margin-bottom: 30px; }
-        .back-btn-wrapper { position: absolute; left: 0; }
         
-        /* TEAM HEADER */
-        .team-stats-header { display: flex; align-items: center; padding: 20px 0; margin-bottom: 10px; cursor: pointer; }
+        .team-stats-header { display: flex; align-items: center; padding: 20px 0; margin-bottom: 10px; }
         .header-logo { width: 60px; height: 60px; font-size: 1.5rem; }
         .header-info { flex: 1; margin-left: 20px;}
         .team-name-header { font-size: 1.2rem; font-weight: 800; margin-bottom: 10px; }
@@ -57,7 +56,6 @@
         .stat-val-big { font-size: 1.6rem; font-weight: 800; line-height: 1; }
         .stat-label-small { font-size: 0.75rem; color: var(--text-secondary); font-weight: 700; text-transform: uppercase; margin-top: 4px;}
 
-        /* PLAYER ROWS */
         .player-row { display: flex; align-items: center; padding: 15px 0; cursor: pointer; transition: background 0.2s; }
         .player-row:hover { background-color: #222; }
         .player-info { flex: 1; }
@@ -67,104 +65,76 @@
         .p-val { font-size: 1.1rem; font-weight: 700; color: white; }
         .p-lbl { font-size: 0.65rem; color: var(--text-secondary); font-weight: 600; text-transform: uppercase; }
 
-        /* COMMENT BADGES & AVATARS */
         .avatar-wrapper { position: relative; display: inline-block; margin-right: 15px; }
-        .comment-badge {
-            position: absolute; bottom: -5px; right: -8px;
-            background-color: var(--accent-red); color: white;
-            font-size: 0.7rem; font-weight: bold; padding: 2px 6px;
-            border-radius: 8px; border: 2px solid var(--bg-main);
-            display: flex; align-items: center; gap: 3px; z-index: 10;
-        }
+        .comment-badge { position: absolute; bottom: -5px; right: -8px; background-color: var(--accent-red); color: white; font-size: 0.7rem; font-weight: bold; padding: 2px 6px; border-radius: 8px; border: 2px solid var(--bg-main); display: flex; align-items: center; gap: 3px; z-index: 10; }
         .player-avatar { width: 60px; height: 60px; border-radius: 50%; background: #333; display: flex; justify-content: center; align-items: center; font-weight: bold; color: #888; font-size: 1.2rem; }
 
-        /* --- PERFORMANCE OVERLAY --- */
-        #perfOverlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95); z-index: 2000;
-            display: none; flex-direction: column;
-        }
-        .perf-header { padding: 20px; display: flex; justify-content: center; gap: 15px; overflow-x: auto; border-bottom: 1px solid #333; }
-        .perf-toggle-icon { width: 50px; height: 50px; border-radius: 50%; background: #333; color: #888; display: flex; justify-content: center; align-items: center; font-weight: bold; cursor: pointer; opacity: 0.6; border: 2px solid transparent; }
-        .perf-toggle-icon.active { opacity: 1; border-color: var(--accent-red); color: white; }
-        
-        .perf-content { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; overflow-y: auto; }
-        .perf-pfp-large { width: 100px; height: 100px; border-radius: 50%; background: #333; color: #fff; font-size: 2.5rem; display: flex; justify-content: center; align-items: center; margin-bottom: 15px; font-weight: bold; }
-        .perf-name-large { font-size: 1.8rem; font-weight: 800; margin-bottom: 25px; }
-        
-        .perf-stats-main { display: flex; gap: 40px; margin-bottom: 40px; }
-        .perf-main-stat { text-align: center; }
-        .perf-main-val { font-size: 2.5rem; font-weight: 800; line-height: 1; }
-        .perf-main-lbl { font-size: 1rem; color: #888; text-transform: uppercase; margin-top: 5px; }
+        /* --- PERFORMANCE PAGE STYLES --- */
+        .perf-top-bar { display: flex; gap: 15px; overflow-x: auto; padding: 15px 0; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; scrollbar-width: none; }
+        .perf-toggle-item { position: relative; opacity: 0.5; transition: 0.2s; cursor: pointer; }
+        .perf-toggle-item.active { opacity: 1; transform: scale(1.1); }
+        .perf-toggle-avatar { width: 50px; height: 50px; border-radius: 50%; background: #333; color: white; display: flex; justify-content: center; align-items: center; font-weight: bold; border: 2px solid transparent; }
+        .perf-toggle-item.active .perf-toggle-avatar { border-color: var(--accent-red); }
+        .perf-rating-badge { position: absolute; top: -5px; right: -5px; background: #222; color: #fff; font-size: 0.65rem; padding: 1px 5px; border-radius: 4px; border: 1px solid #444; }
 
-        .perf-stats-sub { display: flex; gap: 30px; margin-bottom: 40px; background: #111; padding: 15px 30px; border-radius: 12px; }
-        .perf-sub-stat { text-align: center; }
-        .perf-sub-val { font-size: 1.5rem; font-weight: 700; color: #ddd; }
-        .perf-sub-lbl { font-size: 0.8rem; color: #666; text-transform: uppercase; }
+        .perf-main-header { display: flex; align-items: flex-start; gap: 20px; position: relative; margin-bottom: 30px; }
+        .perf-big-avatar { width: 90px; height: 90px; border-radius: 50%; background: #333; color: white; font-size: 2.5rem; display: flex; justify-content: center; align-items: center; font-weight: bold; }
+        .perf-header-info { flex: 1; }
+        .perf-name-title { font-size: 2rem; font-weight: 800; line-height: 1.1; margin-bottom: 5px; }
+        .perf-team-name { color: var(--text-secondary); font-size: 0.9rem; text-transform: uppercase; font-weight: 600; margin-bottom: 15px; }
+        .perf-big-stats { display: flex; gap: 15px; align-items: baseline; }
+        .perf-stat-val { font-size: 1.8rem; font-weight: 700; color: white; }
+        .perf-stat-lbl { font-size: 0.9rem; color: #888; margin-left: 2px; margin-right: 10px; font-weight: 600;}
+        
+        .perf-rating-box { position: absolute; top: 0; right: 0; text-align: right; }
+        .rating-score { font-size: 2.2rem; font-weight: 800; color: var(--accent-red); }
+        
+        /* Action Bar */
+        .action-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid var(--border-color); }
+        .action-left { display: flex; align-items: center; gap: 15px; }
+        .react-btn-group { display: flex; align-items: center; gap: 10px; }
+        .add-react-circle { width: 35px; height: 35px; border-radius: 50%; background: #222; color: #aaa; display: flex; justify-content: center; align-items: center; cursor: pointer; position: relative;}
+        .add-react-circle:hover { background: #333; color: white; }
+        .react-count { font-size: 0.9rem; color: var(--text-secondary); font-weight: 600; }
+        .reaction-list { display: flex; gap: 5px; }
+        .tiny-react { background: #1a1a1a; border: 1px solid #333; padding: 2px 8px; border-radius: 12px; font-size: 0.8rem; color: #ccc; }
 
-        /* REACTION SECTION */
-        .reaction-area { display: flex; align-items: center; gap: 15px; }
-        .add-react-btn { background: #333; border-radius: 50%; width: 45px; height: 45px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 1.2rem; color: #aaa; transition: 0.2s; position: relative; }
-        .add-react-btn:hover { background: #444; color: white; }
+        .action-right { display: flex; gap: 15px; align-items: center; }
+        .rax-pill { background: #1a1a1a; border: 1px solid #333; padding: 5px 12px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; display: flex; align-items: center; gap: 6px; }
+        .icon-btn { color: #888; font-size: 1.2rem; cursor: pointer; }
+        .icon-btn:hover { color: white; }
+
+        /* Hashtags */
+        .hashtag-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
+        .hash-tag { color: var(--accent-red); font-weight: 700; font-size: 0.95rem; }
+
+        /* Full Stats Grid */
+        .full-stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 20px; margin-bottom: 40px; }
+        .grid-stat-box { display: flex; flex-direction: column; }
+        .grid-val { font-size: 1.4rem; font-weight: 700; }
+        .grid-lbl { font-size: 0.7rem; color: #666; font-weight: 700; text-transform: uppercase; }
+
+        /* Comments */
+        .comments-section { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border-color); }
+        .comment-input-area { display: flex; gap: 15px; margin-bottom: 30px; }
+        .comment-input { background: #111; border: 1px solid #333; color: white; flex: 1; padding: 10px 15px; border-radius: 8px; }
+        .send-btn { background: var(--accent-red); color: white; border: none; padding: 0 20px; border-radius: 8px; font-weight: bold; }
         
-        .top-reactions { display: flex; gap: 10px; }
-        .react-badge { background: #1a1a1a; padding: 5px 10px; border-radius: 20px; border: 1px solid #333; font-size: 0.9rem; display: flex; align-items: center; gap: 5px; color: #ccc; }
-        
-        /* EMOJI POPUP */
-        .emoji-popup {
-            position: absolute; bottom: 60px; left: 50%; transform: translateX(-50%);
-            background: #222; padding: 10px; border-radius: 12px; border: 1px solid #444;
-            display: none; grid-template-columns: repeat(4, 1fr); gap: 10px; width: 200px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-        }
+        .comment-item { display: flex; gap: 15px; margin-bottom: 20px; }
+        .comment-avatar { width: 35px; height: 35px; border-radius: 50%; background: #333; display: flex; justify-content: center; align-items: center; font-size: 0.9rem; font-weight: bold; color: #888; flex-shrink: 0; }
+        .comment-body { flex: 1; }
+        .comment-user { font-weight: 700; font-size: 0.9rem; margin-bottom: 2px; }
+        .comment-text { color: #ccc; font-size: 0.95rem; line-height: 1.4; }
+        .comment-meta { font-size: 0.75rem; color: #666; margin-top: 5px; }
+
+        /* Emoji Popup */
+        .emoji-popup { position: absolute; bottom: 45px; left: 0; background: #222; padding: 10px; border-radius: 12px; border: 1px solid #444; display: none; grid-template-columns: repeat(4, 1fr); gap: 10px; width: 200px; box-shadow: 0 5px 15px rgba(0,0,0,0.8); z-index: 5000; }
         .emoji-option { font-size: 1.5rem; cursor: pointer; text-align: center; padding: 5px; border-radius: 5px; }
         .emoji-option:hover { background: #444; }
         .show-popup { display: grid; }
-
-        .close-perf-btn { position: absolute; top: 20px; right: 20px; background: transparent; border: none; color: #888; font-size: 1.5rem; cursor: pointer; }
     </style>
 </head>
 <body>
-
-<div id="perfOverlay">
-    <button class="close-perf-btn" onclick="closePerf()"><i class="fas fa-times"></i></button>
-    <div class="perf-header" id="perfHeader">
-        </div>
-    <div class="perf-content">
-        <div class="perf-pfp-large" id="perfPfp">A</div>
-        <div class="perf-name-large" id="perfName">Player Name</div>
-
-        <div class="perf-stats-main">
-            <div class="perf-main-stat"><div class="perf-main-val" id="perfGoal">0</div><div class="perf-main-lbl">Goal</div></div>
-            <div class="perf-main-stat"><div class="perf-main-val" id="perfAst">0</div><div class="perf-main-lbl">Ast</div></div>
-            <div class="perf-main-stat"><div class="perf-main-val" id="perfSog">0</div><div class="perf-main-lbl">SOG</div></div>
-        </div>
-
-        <div class="perf-stats-sub">
-            <div class="perf-sub-stat"><div class="perf-sub-val" id="perfKicks">0</div><div class="perf-sub-lbl">Total Kicks</div></div>
-            <div class="perf-sub-stat"><div class="perf-sub-val" id="perfXgot">0.0</div><div class="perf-sub-lbl">xGOT</div></div>
-        </div>
-
-        <div class="reaction-area">
-            <div class="add-react-btn" onclick="toggleEmojiPopup()">
-                <i class="fas fa-smile"></i>
-                <div class="emoji-popup" id="emojiPopup">
-                    <div class="emoji-option" onclick="addReaction('🔥')">🔥</div>
-                    <div class="emoji-option" onclick="addReaction('🐐')">🐐</div>
-                    <div class="emoji-option" onclick="addReaction('💩')">💩</div>
-                    <div class="emoji-option" onclick="addReaction('😃')">😃</div>
-                    <div class="emoji-option" onclick="addReaction('🙄')">🙄</div>
-                    <div class="emoji-option" onclick="addReaction('😭')">😭</div>
-                    <div class="emoji-option" onclick="addReaction('🙏')">🙏</div>
-                    <div class="emoji-option" onclick="addReaction('🏆')">🏆</div>
-                </div>
-            </div>
-            <div class="top-reactions" id="reactionList">
-                </div>
-        </div>
-    </div>
-</div>
-
 
 <div class="sidebar">
     <i class="fas fa-house sidebar-icon active" onclick="showHome()"></i>
@@ -174,6 +144,7 @@
 </div>
 
 <div class="main-content">
+
     <div id="homeView" class="view-section active">
         <h1 class="mb-4 fw-bold">Home</h1>
         <div class="top-nav"><div class="nav-item-custom active">FC</div></div>
@@ -220,6 +191,76 @@
             <div id="listBlue"></div>
         </div>
     </div>
+
+    <div id="perfView" class="view-section">
+        <div class="detail-header">
+            <div class="back-btn-wrapper"><button class="btn btn-outline-secondary btn-sm" onclick="closePerfView()">Back</button></div>
+            <h5 class="fw-bold m-0 text-secondary text-uppercase">Performances</h5>
+        </div>
+
+        <div class="perf-top-bar" id="perfScroller">
+            </div>
+
+        <div class="perf-main-header">
+            <div class="perf-big-avatar" id="perfPfp">A</div>
+            <div class="perf-header-info">
+                <div class="perf-name-title" id="perfName">Player Name</div>
+                <div class="perf-team-name" id="perfTeam">Red Team</div>
+                <div class="perf-big-stats">
+                    <span class="perf-stat-val" id="perfGoal">0</span> <span class="perf-stat-lbl">goal</span>
+                    <span class="perf-stat-val" id="perfAst">0</span> <span class="perf-stat-lbl">ast</span>
+                    <span class="perf-stat-val" id="perfSog">0</span> <span class="perf-stat-lbl">sog</span>
+                </div>
+            </div>
+            <div class="perf-rating-box">
+                <div class="rating-score" id="perfRating">0.0</div>
+            </div>
+        </div>
+
+        <div class="action-bar">
+            <div class="action-left">
+                <div class="react-btn-group">
+                    <div class="add-react-circle" onclick="toggleEmojiPopup()">
+                        <i class="fas fa-smile"></i>
+                        <div class="emoji-popup" id="emojiPopup">
+                            <div class="emoji-option" onclick="addReaction('🔥')">🔥</div><div class="emoji-option" onclick="addReaction('🐐')">🐐</div>
+                            <div class="emoji-option" onclick="addReaction('💩')">💩</div><div class="emoji-option" onclick="addReaction('😃')">😃</div>
+                            <div class="emoji-option" onclick="addReaction('🙄')">🙄</div><div class="emoji-option" onclick="addReaction('😭')">😭</div>
+                            <div class="emoji-option" onclick="addReaction('🙏')">🙏</div><div class="emoji-option" onclick="addReaction('🏆')">🏆</div>
+                        </div>
+                    </div>
+                    <span class="react-count" id="reactTotal">0</span>
+                </div>
+                <div class="reaction-list" id="reactionList"></div>
+            </div>
+            <div class="action-right">
+                <div class="rax-pill">🪙 <span id="perfRax">250</span></div>
+                <i class="fas fa-bookmark icon-btn"></i>
+                <i class="fas fa-share icon-btn"></i>
+            </div>
+        </div>
+
+        <div class="hashtag-row" id="perfHashtags">
+            </div>
+
+        <div class="full-stats-grid">
+            <div class="grid-stat-box"><div class="grid-val" id="perfKicks">0</div><div class="grid-lbl">Kicks</div></div>
+            <div class="grid-stat-box"><div class="grid-val" id="perfXgot">0.0</div><div class="grid-lbl">xGOT</div></div>
+            <div class="grid-stat-box"><div class="grid-val">0</div><div class="grid-lbl">Pass</div></div>
+            <div class="grid-stat-box"><div class="grid-val">0</div><div class="grid-lbl">Duel</div></div>
+        </div>
+
+        <div class="comments-section">
+            <h5 class="fw-bold mb-3">Activity</h5>
+            <div class="comment-input-area">
+                <input type="text" id="commentInput" class="comment-input" placeholder="Add a comment...">
+                <button class="send-btn" onclick="postComment()">Post</button>
+            </div>
+            <div id="commentsList">
+                </div>
+        </div>
+
+    </div>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
@@ -238,61 +279,72 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    // STATE
     let currentMatchData = null;
-    let selectedPlayerName = null;
+    let selectedPlayer = null; // Object {name, team}
 
-    function showHome() { document.getElementById('homeView').classList.add('active'); document.getElementById('gameView').classList.remove('active'); }
-    function openGameDetail() { document.getElementById('homeView').classList.remove('active'); document.getElementById('gameView').classList.add('active'); }
+    // --- NAVIGATION ---
+    function showHome() { hideAll(); document.getElementById('homeView').classList.add('active'); }
+    function openGameDetail() { hideAll(); document.getElementById('gameView').classList.add('active'); }
+    function openPerfView(name, team) { 
+        hideAll(); 
+        document.getElementById('perfView').classList.add('active'); 
+        selectedPlayer = { name, team };
+        updatePerfView();
+    }
+    function closePerfView() { openGameDetail(); }
+    
+    function hideAll() {
+        ['homeView', 'gameView', 'perfView'].forEach(id => document.getElementById(id).classList.remove('active'));
+    }
+
     function switchTab(t) {
         ['feed', 'red', 'blue'].forEach(x => { document.getElementById(`content-${x}`).style.display = 'none'; document.getElementById(`tab-${x}`).classList.remove('active'); });
         document.getElementById(`content-${t}`).style.display = 'block'; document.getElementById(`tab-${t}`).classList.add('active');
     }
 
-    (function() {
-        const d = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']; const n = new Date(); const c = document.getElementById('dateBar');
-        for(let i=-3; i<=3; i++){ let x = new Date(); x.setDate(n.getDate()+i); c.innerHTML+=`<div class="date-item ${i===0?'active':''}"><div class="date-day">${i===0?'Today':d[x.getDay()]}</div><div class="date-num">${x.getDate()}</div></div>`; }
-    })();
-
+    // --- LIVE SYNC ---
     db.ref('match/current').on('value', snap => {
         const data = snap.val();
         if(!data) return;
         currentMatchData = data;
 
+        // Scores
         document.getElementById('cardScoreRed').innerText = data.red;
         document.getElementById('cardScoreBlue').innerText = data.blue;
         document.getElementById('detailScore').innerText = `${data.red} - ${data.blue}`;
         
+        // Timer
         const m = Math.floor((data.time||0)/60), s = Math.floor((data.time||0)%60);
         const tStr = `${m}:${s.toString().padStart(2,'0')}`;
         document.getElementById('cardTimer').innerText = tStr;
-        document.getElementById('cardStatus').innerText = data.status || "Waiting";
+        
+        // Status
+        const st = data.status || "Waiting";
+        document.getElementById('cardStatus').innerText = st;
 
+        // Team Stats
         const teamStats = data.stats || { redPos: 50, bluePos: 50, redShots: 0, blueShots: 0 };
         document.getElementById('redPos').innerText = teamStats.redPos + '%';
         document.getElementById('bluePos').innerText = teamStats.bluePos + '%';
         document.getElementById('redShots').innerText = teamStats.redShots;
         document.getElementById('blueShots').innerText = teamStats.blueShots;
 
-        renderPlayers(data.redPlayers || [], 'listRed', 'red');
-        renderPlayers(data.bluePlayers || [], 'listBlue', 'blue');
-        
-        // Refresh overlay if open
-        if(selectedPlayerName) {
-            const allPlayers = [...(data.redPlayers||[]), ...(data.bluePlayers||[])];
-            const p = allPlayers.find(x => x.name === selectedPlayerName);
-            if(p) updatePerfStats(p);
-        }
+        // Render Lists
+        renderPlayerList(data.redPlayers || [], 'listRed', 'red');
+        renderPlayerList(data.bluePlayers || [], 'listBlue', 'blue');
+
+        // Update Perf View if active
+        if(selectedPlayer) updatePerfView();
     });
 
-    function renderPlayers(players, listId, team) {
+    function renderPlayerList(players, listId, team) {
         let html = "";
         if (players.length === 0) { html = `<div class="p-4 text-center text-muted">Waiting...</div>`; } 
         else {
             players.forEach(p => {
                 const initials = p.name.substring(0,2).toUpperCase();
                 html += `
-                <div class="player-row" onclick="openPerfOverlay('${p.name}', '${team}')">
+                <div class="player-row" onclick="openPerfView('${p.name}', '${team}')">
                     <div class="avatar-wrapper"><div class="player-avatar">${initials}</div></div>
                     <div class="player-info">
                         <div class="player-name">${p.name}</div>
@@ -309,70 +361,123 @@
         document.getElementById(listId).innerHTML = html;
     }
 
-    // --- PERFORMANCE OVERLAY LOGIC ---
-    function openPerfOverlay(name, team) {
-        selectedPlayerName = name;
-        document.getElementById('perfOverlay').style.display = 'flex';
+    // --- PERFORMANCE VIEW LOGIC ---
+    function updatePerfView() {
+        if (!selectedPlayer || !currentMatchData) return;
         
-        // Populate Header Toggles
-        const players = team === 'red' ? (currentMatchData.redPlayers||[]) : (currentMatchData.bluePlayers||[]);
-        let headerHtml = "";
-        players.forEach(p => {
-            const init = p.name.substring(0,2).toUpperCase();
-            const isActive = p.name === name ? "active" : "";
-            headerHtml += `<div class="perf-toggle-icon ${isActive}" onclick="openPerfOverlay('${p.name}', '${team}')">${init}</div>`;
+        const teamPlayers = selectedPlayer.team === 'red' ? (currentMatchData.redPlayers||[]) : (currentMatchData.bluePlayers||[]);
+        const p = teamPlayers.find(x => x.name === selectedPlayer.name);
+        if (!p) return;
+
+        // 1. Scroller
+        let scrollHtml = "";
+        teamPlayers.forEach(tp => {
+            const act = tp.name === p.name ? 'active' : '';
+            const init = tp.name.substring(0,2).toUpperCase();
+            scrollHtml += `
+            <div class="perf-toggle-item ${act}" onclick="selectedPlayer.name='${tp.name}'; updatePerfView()">
+                <div class="perf-toggle-avatar">${init}</div>
+            </div>`;
         });
-        document.getElementById('perfHeader').innerHTML = headerHtml;
+        document.getElementById('perfScroller').innerHTML = scrollHtml;
 
-        // Populate Stats
-        const p = players.find(x => x.name === name);
-        if(p) updatePerfStats(p);
-        loadReactions(name);
-    }
-
-    function updatePerfStats(p) {
+        // 2. Main Stats
         document.getElementById('perfPfp').innerText = p.name.substring(0,2).toUpperCase();
         document.getElementById('perfName').innerText = p.name;
+        document.getElementById('perfTeam').innerText = selectedPlayer.team === 'red' ? "Red Team" : "Blue Team";
         document.getElementById('perfGoal').innerText = p.goals;
         document.getElementById('perfAst').innerText = p.ast;
         document.getElementById('perfSog').innerText = p.sog;
-        document.getElementById('perfKicks').innerText = p.kicks || 0; // NEW STAT
+        
+        document.getElementById('perfKicks').innerText = p.kicks || 0;
         document.getElementById('perfXgot').innerText = p.xgot.toFixed(2);
+
+        // 3. Rating & Rax (Formula: Goals*2 + Ast*1.5 + SOG*0.5)
+        const rating = (p.goals * 2.0) + (p.ast * 1.5) + (p.sog * 0.5) + 5.0; // Base 5.0
+        document.getElementById('perfRating').innerText = rating.toFixed(1);
+        document.getElementById('perfRax').innerText = Math.floor(rating * 10);
+
+        // 4. Hashtags
+        let tagsHtml = "";
+        if (p.goals > 0) tagsHtml += `<span class="hash-tag">#scorer</span>`;
+        if (p.goals >= 3) tagsHtml += `<span class="hash-tag">#hatty</span>`;
+        if (p.goals > p.xgot) tagsHtml += `<span class="hash-tag">#efficient</span>`;
+        if (p.sog === 0 && (currentMatchData.status==="Final")) tagsHtml += `<span class="hash-tag">#ghost</span>`;
+        if (p.xgot >= 2.0) tagsHtml += `<span class="hash-tag">#producer</span>`;
+        if (p.ast > 0) tagsHtml += `<span class="hash-tag">#helper</span>`;
+        document.getElementById('perfHashtags').innerHTML = tagsHtml;
+
+        // 5. Load Reactions & Comments
+        loadReactions(p.name);
+        loadComments(p.name);
     }
 
-    function closePerf() {
-        document.getElementById('perfOverlay').style.display = 'none';
-        selectedPlayerName = null;
-        document.getElementById('emojiPopup').classList.remove('show-popup');
-    }
-
-    // --- REACTION SYSTEM ---
-    function toggleEmojiPopup() {
-        document.getElementById('emojiPopup').classList.toggle('show-popup');
-    }
-
+    // --- REACTIONS ---
+    function toggleEmojiPopup() { document.getElementById('emojiPopup').classList.toggle('show-popup'); }
+    
     function addReaction(emoji) {
-        if(!selectedPlayerName) return;
-        // Save to Firebase
-        const ref = db.ref(`match/current/reactions/${selectedPlayerName}/${emoji}`);
-        ref.transaction((current) => (current || 0) + 1);
+        if (!selectedPlayer) return;
+        const ref = db.ref(`match/current/reactions/${selectedPlayer.name}/${emoji}`);
+        ref.transaction(curr => (curr || 0) + 1);
         document.getElementById('emojiPopup').classList.remove('show-popup');
     }
 
     function loadReactions(name) {
         db.ref(`match/current/reactions/${name}`).on('value', snap => {
             const val = snap.val();
-            const container = document.getElementById('reactionList');
-            container.innerHTML = "";
-            if(!val) return;
+            const list = document.getElementById('reactionList');
+            const total = document.getElementById('reactTotal');
+            list.innerHTML = "";
+            
+            if(!val) { total.innerText = "0"; return; }
 
-            // Sort by count
-            const sorted = Object.entries(val).sort((a,b) => b[1] - a[1]).slice(0,3);
-            sorted.forEach(([emoji, count]) => {
-                container.innerHTML += `<div class="react-badge">${emoji} ${count}</div>`;
+            let sum = 0;
+            Object.entries(val).sort((a,b)=>b[1]-a[1]).slice(0,3).forEach(([em, count]) => {
+                list.innerHTML += `<div class="tiny-react">${em} ${count}</div>`;
+                sum += count;
+            });
+            total.innerText = sum;
+        });
+    }
+
+    // --- COMMENTS ---
+    function postComment() {
+        const txt = document.getElementById('commentInput').value.trim();
+        if (!txt || !selectedPlayer) return;
+        
+        db.ref(`match/current/comments/${selectedPlayer.name}`).push({
+            user: "Guest Fan",
+            text: txt,
+            time: Date.now()
+        });
+        document.getElementById('commentInput').value = "";
+    }
+
+    function loadComments(name) {
+        db.ref(`match/current/comments/${name}`).on('value', snap => {
+            const data = snap.val();
+            const list = document.getElementById('commentsList');
+            list.innerHTML = "";
+            if (!data) return;
+
+            Object.values(data).reverse().forEach(c => {
+                const date = new Date(c.time).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                list.innerHTML += `
+                <div class="comment-item">
+                    <div class="comment-avatar">G</div>
+                    <div class="comment-body">
+                        <div class="comment-user">${c.user} <span style="color:#666; font-weight:400; font-size:0.8rem">• ${date}</span></div>
+                        <div class="comment-text">${c.text}</div>
+                    </div>
+                </div>`;
             });
         });
     }
+
+    (function() {
+        const d = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']; const n = new Date(); const c = document.getElementById('dateBar');
+        for(let i=-3; i<=3; i++){ let x = new Date(); x.setDate(n.getDate()+i); c.innerHTML+=`<div class="date-item ${i===0?'active':''}"><div class="date-day">${i===0?'Today':d[x.getDay()]}</div><div class="date-num">${x.getDate()}</div></div>`; }
+    })();
 </script>
 </body>
 </html>
